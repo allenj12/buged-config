@@ -25,7 +25,7 @@
             (cond
               ((fx< i 0) "")
               ((char=? (string-ref buged-file-name i) #\.) (substring buged-file-name i (string-length buged-file-name)))
-              (else (loop (fx1- i))))))) (buged-file-extension)
+              (else (loop (fx1- i)))))))
 
 (define buged-insert-indentation
     (lambda ()

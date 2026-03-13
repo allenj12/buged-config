@@ -30,7 +30,7 @@
 (define buged-insert-indentation
     (lambda ()
         (cond
-          ((member (buged-file-extension) '(".ss" ".sls" ".scm"))
+          ((and (not buged-mark) (member (buged-file-extension) '(".ss" ".sls" ".scm")))
            (buged-inschs (cons #\newline (map (lambda (e) #\space) (iota (buged-scheme-indent))))))
           (else (buged-insch #\newline)))))
 

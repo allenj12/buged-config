@@ -79,11 +79,12 @@
                            (set! matches (cdr matches))))))))))
 
 (set! buged-bindings (cons (list (buged-ctrl #\w)
-                                 (lambda () (buged-write-file)
+                                 (lambda () (define old-bg buged-bg-color)
                                             (set! buged-bg-color 40)
                                             (buged-render)
+                                            (buged-write-file)
                                             (sleep (make-time 'time-duration 100000000 0))
-                                            (set! buged-bg-color 49)))
+                                            (set! buged-bg-color old-bg)))
                            buged-bindings))
     
 (set! buged-bindings (cons (list #\newline

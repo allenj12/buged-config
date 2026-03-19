@@ -57,8 +57,7 @@
                            (buged-inschs (string->list (car matches)))
                            (unless (memq (buged-utf8-ref buged-buffer buged-gap-end) '(32 10 40 91 123 41 93 125))
                                (buged-delete-selection (fx- (buged-forward-word buged-gap-start) (fx- buged-gap-end buged-gap-start))))
-                           (buged-move-gap (fx- (fx+ word-start (bytevector-length (string->utf8 prefix)))
-                                                buged-gap-start))
+                           (buged-move-gap (fx+ word-start (bytevector-length (string->utf8 prefix))))
                            (set! matches (cdr matches))))
                       (else
                        (set! matches (filter 
@@ -74,9 +73,24 @@
                            (buged-inschs (string->list (car matches)))
                            (unless (memq (buged-utf8-ref buged-buffer buged-gap-end) '(32 10 40 91 123 41 93 125))
                                (buged-delete-selection (fx- (buged-forward-word buged-gap-start) (fx- buged-gap-end buged-gap-start))))
-                           (buged-move-gap (fx- (fx+ word-start (bytevector-length (string->utf8 prefix)))
-                                                buged-gap-start))
+                           (buged-move-gap (fx+ word-start (bytevector-length (string->utf8 prefix))))
                            (set! matches (cdr matches))))))))))
+
+#;(set! buged-keyword-highlights
+  `((,(lambda (str)
+          (member 
+              str 
+              '("define" "define-syntax" "define-record-type" "define-enumeration" "define-values"
+              "let" "let*" "letrec" "letrec*" "let-values" "let*-values" "fluid-let" "parameterize"
+              "lambda" "case-lambda" "set!" "quote" "quasiquote" "unquote" "unquote-splicing"
+              "if" "cond" "case" "and" "or" "when" "unless" "begin" "do" "else" "=>"
+              "syntax-case" "syntax-rules" "with-syntax" "syntax" "quasisyntax" "unsyntax" 
+              "library" "export" "import" "module" "rename" "only" "except" "prefix"
+              "trace-define" "trace-lambda" "make-engine" "call/cc" "dynamic-wind"
+              "foreign-procedure" "foreign-callable" "printf" "format" "record-case")))
+     ,(lambda () (buged-set-color 35)))
+    (,(lambda (str) (string->number str))
+     ,(lambda () (buged-set-color 36)))))
 
 (set! buged-bindings (cons (list (buged-ctrl #\w)
                                  (lambda () (define old-bg buged-bg-color)
